@@ -18,6 +18,7 @@ class ATM {
           this.notes[currency][denomination] = notes[denomination];
         }
       }
+      this.checkLowCash();  // Ensure we check for low cash after initialization
     }
   
     setCurrency(currency) {
