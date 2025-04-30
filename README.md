@@ -21,5 +21,6 @@ This is a simple ATM simulation app that allows users to withdraw cash in $20 an
 - Exchanging one currency to another
 - Cryptocurrency support
 - Better error checking and better threshold checking
+- Other devices support
 
 
