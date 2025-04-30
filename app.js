@@ -25,6 +25,7 @@ class ATM {
         throw new Error("Currency not supported.");
       }
       this.currentCurrency = currency;
+      this.checkLowCash(); // Check if low on cash when currency is set
     }
   
     addNotes(currency, denomination, count) {
@@ -36,7 +37,7 @@ class ATM {
         this.notes[currency] = { "20": 0, "50": 0 };
       }
       this.notes[currency][denomination] += count;
-      this.checkLowCash();
+      this.checkLowCash(); // Check if low on cash after adding notes
     }
   
     getAvailableNotes(currency) {
@@ -65,6 +66,7 @@ class ATM {
             dispenseNotes["20"] = twentiesNeeded;
   
             this.notes[this.currentCurrency] = currencyNotes;
+            this.checkLowCash(); // Check low cash after dispensing
             return dispenseNotes;
           }
         }
@@ -72,6 +74,7 @@ class ATM {
   
       // No valid combination
       this.notes[this.currentCurrency] = originalNotes;
+      this.checkLowCash(); // Check low cash if failed to dispense
       throw new Error("Cannot dispense the requested amount with available notes.");
     }
   
