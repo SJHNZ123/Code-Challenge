@@ -18,6 +18,7 @@ class ATM {
           this.notes[currency][denomination] = notes[denomination];
         }
       }
+      console.log('ATM Initialized:', this.notes); // Debugging log
       this.checkLowCash();  // Ensure we check for low cash after initialization
     }
   
@@ -26,6 +27,7 @@ class ATM {
         throw new Error("Currency not supported.");
       }
       this.currentCurrency = currency;
+      console.log('Currency set to:', this.currentCurrency); // Debugging log
       this.checkLowCash(); // Check if low on cash when currency is set
     }
   
@@ -38,6 +40,7 @@ class ATM {
         this.notes[currency] = { "20": 0, "50": 0 };
       }
       this.notes[currency][denomination] += count;
+      console.log(`Added ${count} x $${denomination} notes to ${currency}`); // Debugging log
       this.checkLowCash(); // Check if low on cash after adding notes
     }
   
@@ -81,6 +84,9 @@ class ATM {
   
     checkLowCash() {
       const available = this.getAvailableNotes(this.currentCurrency);
+      console.log('Available notes:', available); // Debugging log
+  
+      // Check if we are low on either $20 or $50 notes
       if (available["20"] < this.threshold || available["50"] < this.threshold) {
         showMessage(`Warning: Low cash! Less than ${this.threshold} notes of one denomination. Please restock.`, "warning");
       }
@@ -91,6 +97,7 @@ class ATM {
   function showMessage(message, type = "success") {
     const messagesDiv = document.getElementById("messages");
     messagesDiv.innerHTML = `<div class="${type}">${message}</div>`;
+    console.log(`${type}: ${message}`); // Debugging log
   
     setTimeout(() => {
       messagesDiv.innerHTML = "";
@@ -136,8 +143,8 @@ class ATM {
       <option value="20">$20</option>
       <option value="50">$50</option>
     </select>
-    <input type="number" id="noteCount" placeholder="Number of notes" />
-    <button id="addNotesButton">Add Notes</button>
+    <input type="number" id="noteCount" placeholder="Enter amount to deposit" />
+    <button id="addNotesButton">Deposit Notes</button>
   
     <div id="output"></div>
     <div id="messages"></div>
