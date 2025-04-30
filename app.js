@@ -22,28 +22,34 @@ class ATM {
   
     dispense(amount) {
       let originalNotes = { ...this.notes };
+      let success = false;
       let toDispense = { "50": 0, "20": 0 };
-      let remaining = amount;
   
-      // Prefer $50 first
-      while (remaining >= 50 && this.notes["50"] > 0) {
-        remaining -= 50;
-        this.notes["50"]--;
-        toDispense["50"]++;
+      // Try all possible number of $50s from high to low
+      let maxFifties = Math.min(Math.floor(amount / 50), this.notes["50"]);
+  
+      for (let fifties = maxFifties; fifties >= 0; fifties--) {
+        let remaining = amount - (fifties * 50);
+        if (remaining % 20 === 0) {
+          let twenties = remaining / 20;
+          if (twenties <= this.notes["20"]) {
+            // Found a valid combination
+            toDispense["50"] = fifties;
+            toDispense["20"] = twenties;
+            success = true;
+            break;
+          }
+        }
       }
   
-      while (remaining >= 20 && this.notes["20"] > 0) {
-        remaining -= 20;
-        this.notes["20"]--;
-        toDispense["20"]++;
-      }
-  
-      if (remaining === 0) {
+      if (success) {
+        this.notes["50"] -= toDispense["50"];
+        this.notes["20"] -= toDispense["20"];
         this.renderStatus();
         alert(`Dispensed: $50 x ${toDispense["50"]}, $20 x ${toDispense["20"]}`);
       } else {
         alert("Error: Cannot dispense that amount with available notes.");
-        this.notes = { ...originalNotes }; // Rollback
+        this.notes = { ...originalNotes }; // rollback
       }
     }
   
