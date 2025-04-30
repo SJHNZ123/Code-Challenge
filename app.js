@@ -116,7 +116,6 @@ class ATM {
   
   const appDiv = document.getElementById("app");
   appDiv.innerHTML = `
-    <h1 class="app-title">ATM App</h1>
     <select id="currencySelect">
       <option value="USD">USD</option>
       <option value="EUR">EUR</option>
