@@ -2,6 +2,7 @@
 class ATM {
     constructor() {
       this.notes = { "20": 0, "50": 0 };
+      this.threshold = 3; // Warn when less than 3 notes left
     }
   
     initialize(initialNotes) {
@@ -33,7 +34,6 @@ class ATM {
         if (remaining % 20 === 0) {
           let twenties = remaining / 20;
           if (twenties <= this.notes["20"]) {
-            // Found a valid combination
             toDispense["50"] = fifties;
             toDispense["20"] = twenties;
             success = true;
@@ -55,13 +55,31 @@ class ATM {
   
     renderStatus() {
       const app = document.getElementById('app');
+      let warning = this.getThresholdWarnings();
+  
       app.innerHTML = `
         <h2>${this.report()}</h2>
+        ${warning}
         <br>
         <label>Withdraw Amount:</label>
         <input id="withdrawAmount" type="number" placeholder="e.g., 100" />
         <button onclick="withdraw()">Withdraw</button>
       `;
+    }
+  
+    getThresholdWarnings() {
+      let warnings = [];
+      if (this.notes["20"] < this.threshold) {
+        warnings.push("⚠️ Low on $20 notes!");
+      }
+      if (this.notes["50"] < this.threshold) {
+        warnings.push("⚠️ Low on $50 notes!");
+      }
+      if (warnings.length > 0) {
+        return `<div style="color: red; margin-top: 10px;">${warnings.join("<br>")}</div>`;
+      } else {
+        return "";
+      }
     }
   }
   
