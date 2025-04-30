@@ -131,7 +131,7 @@ class ATM {
   
     <div id="cashAvailable" style="margin-top: 20px; font-weight: bold;"></div>
   
-    <h3 style="margin-top: 30px;">Add Notes</h3>
+    <h3 style="margin-top: 30px;">Deposit Notes</h3>
     <select id="noteType">
       <option value="20">$20</option>
       <option value="50">$50</option>
