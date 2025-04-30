@@ -75,3 +75,13 @@ body {
     border-radius: 5px;
   }
   
+  #cashAvailable {
+    color: white; /* Make the text white */
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  h3 {
+    color: white; /* Make "Add Notes" text white */
+  }
