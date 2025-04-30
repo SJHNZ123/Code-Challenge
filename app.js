@@ -82,6 +82,14 @@ class ATM {
     }, 3000);
   }
   
+  function updateAvailableCashDisplay() {
+    const available = atm.getAvailableNotes(atm.currentCurrency);
+    document.getElementById("cashAvailable").innerHTML = `
+      Available Notes for ${atm.currentCurrency}:<br>
+      $50 x ${available["50"]} | $20 x ${available["20"]}
+    `;
+  }
+  
   // Setup UI
   const atm = new ATM();
   atm.initialize({
@@ -101,13 +109,26 @@ class ATM {
     <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" />
     <button id="withdrawButton">Withdraw</button>
   
+    <div id="cashAvailable" style="margin-top: 20px; font-weight: bold;"></div>
+  
+    <h3 style="margin-top: 30px;">Add Notes</h3>
+    <select id="noteType">
+      <option value="20">$20</option>
+      <option value="50">$50</option>
+    </select>
+    <input type="number" id="noteCount" placeholder="Number of notes" />
+    <button id="addNotesButton">Add Notes</button>
+  
     <div id="output"></div>
   `;
+  
+  updateAvailableCashDisplay();
   
   document.getElementById("currencySelect").addEventListener("change", (e) => {
     try {
       atm.setCurrency(e.target.value);
       showMessage(`Currency changed to ${e.target.value}`, "success");
+      updateAvailableCashDisplay();
     } catch (error) {
       showMessage(error.message, "error");
     }
@@ -129,6 +150,26 @@ class ATM {
       document.getElementById("output").innerHTML = `<p>Dispensed: ${parts.join(", ")}</p>`;
       showMessage("Withdrawal successful!", "success");
       document.getElementById("withdrawAmount").value = "";
+      updateAvailableCashDisplay();
+    } catch (error) {
+      showMessage(error.message, "error");
+    }
+  });
+  
+  document.getElementById("addNotesButton").addEventListener("click", () => {
+    const denomination = parseInt(document.getElementById("noteType").value);
+    const count = parseInt(document.getElementById("noteCount").value);
+  
+    if (isNaN(count) || count <= 0) {
+      showMessage("Please enter a valid number of notes.", "error");
+      return;
+    }
+  
+    try {
+      atm.addNotes(atm.currentCurrency, denomination, count);
+      showMessage(`Added ${count} x $${denomination} notes to ${atm.currentCurrency}`, "success");
+      document.getElementById("noteCount").value = "";
+      updateAvailableCashDisplay();
     } catch (error) {
       showMessage(error.message, "error");
     }
