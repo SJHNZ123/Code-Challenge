@@ -1,63 +1,70 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ced0d1;
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
     margin: 0;
     padding: 20px;
   }
   
+  .app-title {
+    text-align: center;
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
   #app {
     max-width: 400px;
-    margin: 40px auto;
-    background: #ffffff;
-    padding: 30px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   }
   
-  h2 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-weight: bold;
-    display: block;
-    margin-top: 20px;
-    margin-bottom: 8px;
-  }
-  
-  input[type="number"],
-  select {
+  input, select, button {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 6px;
   }
   
   button {
-    width: 100%;
     background-color: #007bff;
     color: white;
-    padding: 12px;
-    font-size: 16px;
     border: none;
-    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    font-size: 16px;
   }
   
   button:hover {
     background-color: #0056b3;
   }
   
-  div[style*="color: red;"] {
-    margin-top: 10px;
-    background-color: #ffe5e5;
+  #messages {
+    max-width: 400px;
+    margin: 10px auto;
+    text-align: center;
+  }
+  
+  .success {
+    background-color: #d4edda;
+    color: #155724;
     padding: 10px;
-    border-radius: 8px;
-    font-size: 14px;
+    margin-bottom: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+  }
+  
+  .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
   }
   
