@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: #ff4514;
+    background: #ffffff;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -24,7 +24,7 @@ body {
   #app {
     max-width: 400px;
     margin: 0 auto;
-    background: #ffffff;
+    background: #ff4514;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -40,15 +40,15 @@ body {
   }
   
   button {
-    background-color: #ff4514;
-    color: white;
+    background-color: #ffffff;
+    color: #000000;
     border: none;
     cursor: pointer;
     font-size: 16px;
   }
   
   button:hover {
-    background-color: #af2b07;
+    background-color: #a3a3a3;
   }
   
   #messages {
