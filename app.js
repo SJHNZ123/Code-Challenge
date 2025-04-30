@@ -2,6 +2,7 @@ class ATM {
     constructor() {
       this.notes = {};
       this.currentCurrency = 'USD';
+      this.threshold = 3;  // Threshold for low cash warning
     }
   
     initialize(notesByCurrency) {
@@ -35,6 +36,7 @@ class ATM {
         this.notes[currency] = { "20": 0, "50": 0 };
       }
       this.notes[currency][denomination] += count;
+      this.checkLowCash();
     }
   
     getAvailableNotes(currency) {
@@ -72,6 +74,13 @@ class ATM {
       this.notes[this.currentCurrency] = originalNotes;
       throw new Error("Cannot dispense the requested amount with available notes.");
     }
+  
+    checkLowCash() {
+      const available = this.getAvailableNotes(this.currentCurrency);
+      if (available["20"] < this.threshold || available["50"] < this.threshold) {
+        showMessage(`Warning: Low cash! Less than ${this.threshold} notes of one denomination. Please restock.`, "warning");
+      }
+    }
   }
   
   // Utility Functions
@@ -89,7 +98,7 @@ class ATM {
     const total =
       available["20"] * 20 +
       available["50"] * 50;
-      
+  
     document.getElementById("cashAvailable").innerHTML = `
       <strong>Available Notes for ${atm.currentCurrency}:</strong><br>
       $50 x ${available["50"]} | $20 x ${available["20"]}<br>
