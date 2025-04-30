@@ -116,8 +116,8 @@ class ATM {
   const atm = new ATM();
   atm.initialize({
     "USD": { "20": 10, "50": 5 },
-    "EUR": { "20": 8, "50": 6 },
-    "GBP": { "20": 4, "50": 3 }
+    "EUR": { "20": 10, "50": 5 },
+    "GBP": { "20": 10, "50": 5 }
   });
   
   // Helper functions
