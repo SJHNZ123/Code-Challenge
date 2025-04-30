@@ -43,32 +43,34 @@ class ATM {
   
     dispense(amount) {
       const currencyNotes = this.notes[this.currentCurrency] || { "20": 0, "50": 0 };
-  
       const originalNotes = { ...currencyNotes };
-  
       const dispenseNotes = { "20": 0, "50": 0 };
       let remaining = amount;
   
-      while (remaining >= 50 && currencyNotes["50"] > 0) {
-        remaining -= 50;
-        currencyNotes["50"]--;
-        dispenseNotes["50"]++;
+      let maxFifties = Math.min(Math.floor(remaining / 50), currencyNotes["50"]);
+  
+      for (let fifties = maxFifties; fifties >= 0; fifties--) {
+        let remainingAfterFifties = remaining - (fifties * 50);
+  
+        if (remainingAfterFifties % 20 === 0) {
+          let twentiesNeeded = remainingAfterFifties / 20;
+  
+          if (twentiesNeeded <= currencyNotes["20"]) {
+            // SUCCESS
+            currencyNotes["50"] -= fifties;
+            currencyNotes["20"] -= twentiesNeeded;
+            dispenseNotes["50"] = fifties;
+            dispenseNotes["20"] = twentiesNeeded;
+  
+            this.notes[this.currentCurrency] = currencyNotes;
+            return dispenseNotes;
+          }
+        }
       }
   
-      while (remaining >= 20 && currencyNotes["20"] > 0) {
-        remaining -= 20;
-        currencyNotes["20"]--;
-        dispenseNotes["20"]++;
-      }
-  
-      if (remaining === 0) {
-        this.notes[this.currentCurrency] = currencyNotes;
-        return dispenseNotes;
-      } else {
-        // Rollback if cannot dispense exact amount
-        this.notes[this.currentCurrency] = originalNotes;
-        throw new Error("Cannot dispense the requested amount with available notes.");
-      }
+      // No valid combination
+      this.notes[this.currentCurrency] = originalNotes;
+      throw new Error("Cannot dispense the requested amount with available notes.");
     }
   }
   
@@ -84,9 +86,14 @@ class ATM {
   
   function updateAvailableCashDisplay() {
     const available = atm.getAvailableNotes(atm.currentCurrency);
+    const total =
+      available["20"] * 20 +
+      available["50"] * 50;
+      
     document.getElementById("cashAvailable").innerHTML = `
-      Available Notes for ${atm.currentCurrency}:<br>
-      $50 x ${available["50"]} | $20 x ${available["20"]}
+      <strong>Available Notes for ${atm.currentCurrency}:</strong><br>
+      $50 x ${available["50"]} | $20 x ${available["20"]}<br>
+      <strong>Total Cash:</strong> $${total}
     `;
   }
   
@@ -100,6 +107,7 @@ class ATM {
   
   const appDiv = document.getElementById("app");
   appDiv.innerHTML = `
+    <h1 class="app-title">ATM App</h1>
     <select id="currencySelect">
       <option value="USD">USD</option>
       <option value="EUR">EUR</option>
@@ -120,6 +128,7 @@ class ATM {
     <button id="addNotesButton">Add Notes</button>
   
     <div id="output"></div>
+    <div id="messages"></div>
   `;
   
   updateAvailableCashDisplay();
