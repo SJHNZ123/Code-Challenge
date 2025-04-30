@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f0f2f5;
+    background: #ff4514;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -15,7 +15,7 @@ body {
     font-size: 36px;
     margin-top: 20px;
     margin-bottom: 20px;
-    color: #ff4514;
+    color: #ffffff;
     font-weight: bold;
     width: 100%;
   }
@@ -24,7 +24,7 @@ body {
   #app {
     max-width: 400px;
     margin: 0 auto;
-    background: white;
+    background: #ffffff;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
